@@ -27,6 +27,11 @@ client.on('message', message => {
             message.channel.send('All hail the queen!\nhttps://i.imgur.com/C3Prxe4.jpg');
             return;
         
+        case "!mrag":
+            message.channel.send('THE DARK MRAG\nhttps://i.imgur.com/BqSF5NO.png');
+        //     message.channel.send('MRAG\nhttps://i.imgur.com/Qwp7TRi.png');
+            return;
+        
         case "!lex":
             handleLexCommand(message);
             return;
@@ -42,7 +47,7 @@ client.on('message', message => {
 });
 
 function handleDefault(message) {
-    if (message.channel.id = '518101941419507712') {
+    if (message.channel.id === '518101941419507712') {
         RoyalPetWatcher.processMessage(message);
     }
 }

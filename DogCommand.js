@@ -1,6 +1,7 @@
 const fs = require("fs");
 
 function handleDogCommand(message, dog) {
+
     var content = message.content;
 
     var flag = content.split(" ")[1];
@@ -77,7 +78,9 @@ function parsePics(channel, imagesString, dog) {
 function updateDogPics(dog, newPics) {
     var dogPics = loadDogPics(dog);
     dogPics = dogPics.length > 0 ? dogPics.concat(newPics) : newPics;
-    fs.writeFile(dog + 'Pics.dog', dogPics);
+    fs.writeFile(dog + 'Pics.dog', dogPics, 'utf8', function (err) {
+        console.log(err);
+    });
 
     var end = dogPics.length > 1 ? ' pics!' : ' pic!';
     return "added " + newPics.length + ' new ' + dog + end;
