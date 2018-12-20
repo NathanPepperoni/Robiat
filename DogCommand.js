@@ -81,7 +81,7 @@ function validAddRole(member) {
   return member.roles.has(dogCommandRoleID);
 }
 
-function parsePics(imagesString, dog) {
+function parsePics(imagesString) {
   splitImages = imagesString.split(",");
   images = splitImages.length != 0 ? splitImages : imagesString;
 

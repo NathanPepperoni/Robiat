@@ -5,6 +5,7 @@ const Logger = require('./Logger');
 const client = new Discord.Client();
 const lexCommand = new DogCommand('lex');
 const clarkCommand = new DogCommand('clark');
+const marshCommand = new DogCommand('marshmallow');
 const auth = process.env.ROBIAT_AUTH_KEY;
 
 client.on('ready', () => {
@@ -32,11 +33,15 @@ client.on('message', message => {
       return;
 
     case "!lex":
-      handleLexCommand(message);
+      lexCommand.processMessage(message);
       return;
 
     case "!clark":
-      handleClarkCommand(message);
+      clarkCommand.processMessage(message);
+      return;
+
+    case "!marshmallow":
+      marshCommand.processMessage(message);
       return;
 
     case "!dan":
@@ -63,14 +68,6 @@ function handleDanCommand(message) {
     message.channel.send("did someone say Dan?");
     message.channel.send({ file: "http://www.rednovalabs.com/images/team/dan-stucky/funny.jpg" });
   }
-}
-
-function handleLexCommand(message) {
-  lexCommand.processMessage(message);
-}
-
-function handleClarkCommand(message) {
-  clarkCommand.processMessage(message);
 }
 
 client.login(auth);
