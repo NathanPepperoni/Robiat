@@ -1,0 +1,27 @@
+{
+  "name": "robiat",
+  "version": "1.0.0",
+  "description": "Discord bot for Queen_Melon's discord server",
+  "main": "Robiat.js",
+  "dependencies": {
+    "aws-sdk": "^2.380.0",
+    "discord.js": "^11.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reniat/Robiat.git"
+  },
+  "keywords": [
+    "discord"
+  ],
+  "author": "Reniat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reniat/Robiat/issues"
+  },
+  "homepage": "https://github.com/reniat/Robiat#readme"
+}

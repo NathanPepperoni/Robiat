@@ -39,6 +39,10 @@ client.on('message', message => {
       handleClarkCommand(message);
       return;
 
+    case "!dan":
+      handleDanCommand(message);
+      return;
+
     default:
       handleDefault(message);
       return;
@@ -48,6 +52,16 @@ client.on('message', message => {
 function handleDefault(message) {
   if (message.channel.id === '518101941419507712') {
     RoyalPetWatcher.processMessage(message);
+  }
+  if (message.content.includes('<@213098512798187521>')) {
+    handleDanCommand(message);
+  }
+}
+
+function handleDanCommand(message) {
+  if (message.guild.id === '524282560260603905') {
+    message.channel.send("did someone say Dan?");
+    message.channel.send({ file: "http://www.rednovalabs.com/images/team/dan-stucky/funny.jpg" });
   }
 }
 
