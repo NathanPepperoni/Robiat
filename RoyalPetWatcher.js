@@ -1,8 +1,8 @@
 class RoyalPetWatcher {
-    constructor() { }
+  constructor() { }
 
-    static processMessage(message) {
-        // TODO
-    }
+  static processMessage(message) {
+    // TODO
+  }
 }
 module.exports = RoyalPetWatcher;

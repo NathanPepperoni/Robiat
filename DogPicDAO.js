@@ -11,7 +11,7 @@ class DogPicDAO {
     var docClient = getDocClient();
 
     var updateParams = {
-      TableName:dogPicsTable,
+      TableName: dogPicsTable,
       Key: {
         dogName: dog
       },
@@ -20,12 +20,12 @@ class DogPicDAO {
         '#d': 'dogPics'
       },
       ExpressionAttributeValues: {
-        ":vals": dogPics   
+        ":vals": dogPics
       },
 
     };
-    
-    docClient.update(updateParams, function(err) {
+
+    docClient.update(updateParams, function (err) {
       if (err) {
         Logger.logEvent('error', err);
       }
@@ -38,13 +38,13 @@ class DogPicDAO {
     var docClient = getDocClient();
 
     var getParams = {
-      TableName:dogPicsTable,
+      TableName: dogPicsTable,
       Key: {
         dogName: dog
       }
     };
-    
-    docClient.get(getParams, function(err, data) {
+
+    docClient.get(getParams, function (err, data) {
       if (err) {
         Logger.logEvent('error', err);
       }
