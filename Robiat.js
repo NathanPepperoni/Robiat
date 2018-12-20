@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const fs = require("fs");
 const RoyalPetWatcher = require('./RoyalPetWatcher');
 const DogCommand = require('./DogCommand');
+const Logger = require('./Logger');
 const client = new Discord.Client();
 const lexCommand = new DogCommand('lex');
 const clarkCommand = new DogCommand('clark');
@@ -9,7 +10,8 @@ const auth = process.env.ROBIAT_AUTH_KEY;
 
 
 client.on('ready', () => {
-    console.log('Logged in as ' + client.user.tag + '!');
+    Logger.client = client;
+    Logger.logEvent('info', 'Logged in as ' + client.user.tag + '!');
 });
 
 client.on('message', message => {

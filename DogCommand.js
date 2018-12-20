@@ -1,4 +1,6 @@
 const fs = require("fs");
+const Logger = require('./Logger');
+const logger = new Logger();
 
 function handleDogCommand(message, dog) {
 
@@ -79,7 +81,7 @@ function updateDogPics(dog, newPics) {
     var dogPics = loadDogPics(dog);
     dogPics = dogPics.length > 0 ? dogPics.concat(newPics) : newPics;
     fs.writeFile(dog + 'Pics.dog', dogPics, 'utf8', function (err) {
-        console.log(err);
+        logger.logEvent('error', err);
     });
 
     var end = dogPics.length > 1 ? ' pics!' : ' pic!';
