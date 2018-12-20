@@ -1,6 +1,6 @@
 # Robiat
 Discord bot for Queen_Melon's discord server
-
+Dan is the greatest
 
 TODO:
 * clean up spaghetti code
