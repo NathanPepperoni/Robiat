@@ -1,14 +1,21 @@
-const fs = require("fs");
-const Logger = require('./Logger');
-const logger = new Logger();
+const DogPicDAO = require('./DogPicDAO');
+const dogPicDAO = new DogPicDAO();
+
+class DogCommand {
+    constructor(dog) {
+        this.dog = dog;
+    }
+
+    processMessage(message) {
+        handleDogCommand(message, this.dog);
+    }
+}
 
 function handleDogCommand(message, dog) {
 
     var content = message.content;
 
     var flag = content.split(" ")[1];
-
-    var dogList = loadDogPics(dog);
 
     // who has time for an actual grammar?
     if (flag && flag.trim().toLowerCase() === "-add") {
@@ -17,47 +24,56 @@ function handleDogCommand(message, dog) {
     }
 
     if (content === "!" + dog + " -list") {
-        var wrappedDogList = [];
-        for (dog in dogList) {
-            wrappedDogList.push("<" + dogList[dog] + ">")
-        }
-        message.channel.send(wrappedDogList);
+        dogPicDAO.getDogPics(dog, function(item) {
+            var dogPics = item.dogPics;
 
+            if (dogPics.length == 0) {
+                noDogsMessage(message.channel, item.dogName);
+                return;
+            }
+
+            var wrappedDogList = [];
+            for (dog in dogPics) {
+                wrappedDogList.push("<" + dogPics[dog] + ">")
+            }
+            message.channel.send(wrappedDogList);
+        });
         return;
     }
 
-    if (dogList.length == 0) {
-        message.channel.send("Unfortunately there are no " + dog + " to show currently :(\nA user with valid permissions can add pics with '!" + dog + " -add <link to image>'")
-        return;
-    }
-    var dogPic = dogList[Math.floor(Math.random()*dogList.length)]
-    message.channel.send({file: dogPic});
+    sendRandomDog(message.channel, dog);
 }
 
-function loadDogPics(dog) {
-    var dogData = fs.readFileSync(dog + 'Pics.dog').toString();
-    if (dogData.length == 0) {
-        return [];
-    }
+function noDogsMessage(channel, dogName) {
+    channel.send("Unfortunately there are no " + dogName + " pics to show currently :(\nA user with valid permissions can add pics with '!" + dogName + " -add <link to image>'")
+}
 
-    var splitData = dogData.split(',');
-
-    for (data in splitData) {
-        splitData[data] = splitData[data].trim();
-    }
-
-    return splitData.length > 0 ? splitData : [dogData];
+function sendRandomDog(channel, dog) {
+    dogPicDAO.getDogPics(dog, function(item) {
+        var dogPics = item.dogPics;
+        var dogPic = dogPics[Math.floor(Math.random()*dogPics.length)]
+        channel.send({file: dogPic});
+    });
 }
 
 function handleAddCase(message, dog) {
     if (!validAddRole(message.member)) {
-        message.channel.send("sorry, you do not have the right role to add dog pics.")
+        message.channel.send("Sorry, you do not have the right role to add dog pics.")
         return;
     }
     var commandIndex = dog.length + 6;
-    var newPics = parsePics(message.channel, message.content.substring(commandIndex), dog);
+    var newPics = parsePics(message.content.substring(commandIndex), dog);
     
-    message.channel.send(updateDogPics(dog, newPics));
+    dogPicDAO.addDogPics(dog, newPics, function(err) {
+        var pictext = newPics.length > 1 ? 'pics' : 'pic';
+
+        if (err) {
+            message.channel.send('There was an error saving the new ' + pictext + '. Please contact @Reniat.');
+        }
+        else {
+            message.channel.send("Added " + newPics.length + ' new ' + dog + ' ' + pictext + '!');
+        }
+    });
 }
 
 function validAddRole(member) {
@@ -65,7 +81,7 @@ function validAddRole(member) {
     return member.roles.has(dogCommandRoleID);
 }
 
-function parsePics(channel, imagesString, dog) {
+function parsePics(imagesString, dog) {
     splitImages = imagesString.split(",");
     images = splitImages.length != 0 ? splitImages : imagesString;
 
@@ -75,28 +91,6 @@ function parsePics(channel, imagesString, dog) {
     }
 
     return newPics;
-}
-
-function updateDogPics(dog, newPics) {
-    var dogPics = loadDogPics(dog);
-    dogPics = dogPics.length > 0 ? dogPics.concat(newPics) : newPics;
-    fs.writeFile(dog + 'Pics.dog', dogPics, 'utf8', function (err) {
-        logger.logEvent('error', err);
-    });
-
-    var end = dogPics.length > 1 ? ' pics!' : ' pic!';
-    return "added " + newPics.length + ' new ' + dog + end;
-}
-
-class DogCommand {
-    constructor(dog) {
-        this.dog = dog;
-        this.dogPics = loadDogPics(dog);
-    }
-
-    processMessage(message) {
-        handleDogCommand(message, this.dog, this.dogPics);
-    }
 }
 
 module.exports = DogCommand;

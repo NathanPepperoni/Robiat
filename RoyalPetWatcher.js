@@ -2,7 +2,7 @@ class RoyalPetWatcher {
     constructor() { }
 
     static processMessage(message) {
-        console.log(message.content);
+        // TODO
     }
 }
 module.exports = RoyalPetWatcher;

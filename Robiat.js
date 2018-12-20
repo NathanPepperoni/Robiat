@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const fs = require("fs");
 const RoyalPetWatcher = require('./RoyalPetWatcher');
 const DogCommand = require('./DogCommand');
 const Logger = require('./Logger');
@@ -7,7 +6,6 @@ const client = new Discord.Client();
 const lexCommand = new DogCommand('lex');
 const clarkCommand = new DogCommand('clark');
 const auth = process.env.ROBIAT_AUTH_KEY;
-
 
 client.on('ready', () => {
     Logger.client = client;
@@ -31,7 +29,7 @@ client.on('message', message => {
         
         case "!mrag":
             message.channel.send('THE DARK MRAG\nhttps://i.imgur.com/BqSF5NO.png');
-        //     message.channel.send('MRAG\nhttps://i.imgur.com/Qwp7TRi.png');
+            //forbidden mrag: message.channel.send('MRAG\nhttps://i.imgur.com/Qwp7TRi.png');
             return;
         
         case "!lex":
