@@ -33,6 +33,11 @@ client.on('message', message => {
       //forbidden mrag: message.channel.send('MRAG\nhttps://i.imgur.com/Qwp7TRi.png');
       return;
 
+    case "!hohoho":
+      message.channel.send('ho ho ho!');
+      message.channel.send({file: "https://media.giphy.com/media/cc3FdmGSrr35C/giphy.gif"});
+      return;
+
     case "!lex":
       lexCommand.processMessage(message);
       return;
