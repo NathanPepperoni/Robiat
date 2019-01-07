@@ -8,10 +8,11 @@ const lexCommand = new DogCommand('lex');
 const clarkCommand = new DogCommand('clark');
 const marshCommand = new DogCommand('marshmallow');
 const auth = process.env.ROBIAT_AUTH_KEY;
+const retryMax = 4;
 
 client.on('ready', () => {
   Logger.client = client;
-  Logger.logEvent('info', "Running on " + os.hostname() + " (" + os.type() + " " + os.release() + ")");
+  Logger.logEvent('info', "Reconnected on " + os.hostname() + " (" + os.type() + " " + os.release() + ")");
 });
 
 client.on('message', message => {
@@ -76,4 +77,19 @@ function handleDanCommand(message) {
   }
 }
 
-client.login(auth);
+function login(attemptCount = 0) {
+  if (attemptCount >= retryMax) {
+    Logger.logEvent('error', "Could not reconnect to discord server.");
+    return;
+  };
+  client.login(auth)
+  .catch(reason => {
+    attemptCount += 1;
+    Logger.logEvent('error',reason);
+    Logger.logEvent('info', "Reconnection attempt number " + attemptCount);
+    login(attemptCount);
+    setTimeout(() => {return}, 5000);
+  });
+}
+
+login();

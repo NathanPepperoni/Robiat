@@ -1,15 +1,16 @@
 const logChannelID = "525143449654001664";
 
 function sendToLogChannel(type, message) {
-  var messageString = new Date().toTimeString() + "\r\n" + type.toUpperCase() + ': ' + message;
+  message = type.toUpperCase() + ': ' + message;
   if (Logger.client) {
-    var logChannel = Logger.client.channels.get(logChannelID);
+    let logChannel = Logger.client.channels.get(logChannelID);
+    let messageString = new Date().toTimeString() + "\r\n" + message;
     logChannel.send("```" + messageString + "```");
   }
   else {
-    console.log(new Date().toTimeString() + "\r\nFATAL: could not send log message! Logger.client not set!");
+    console.log(new Date().toTimeString() + "  FATAL: could not send log message! Logger.client not set!");
   }
-  console.log(messageString);
+  console.log(new Date().toTimeString() + "  " + message);
 }
 
 class Logger {
