@@ -1,14 +1,12 @@
 var AWS = require('aws-sdk');
 const Logger = require('./Logger');
 const dogPicsTable = 'QueenMelonDogPics';
-const authID = process.env.ROBIAT_AWS_ID;
-const authSecret = process.env.ROBIAT_AWS_SECRET;
 
 class DogPicDAO {
   constructor() { }
 
   addDogPics(dog, dogPics, callback) {
-    var docClient = getDocClient();
+    var docClient = new AWS.DynamoDB.DocumentClient();
 
     var updateParams = {
       TableName: dogPicsTable,
@@ -35,7 +33,7 @@ class DogPicDAO {
   }
 
   getDogPics(dog, callback) {
-    var docClient = getDocClient();
+    var docClient = new AWS.DynamoDB.DocumentClient();
 
     var getParams = {
       TableName: dogPicsTable,
@@ -52,17 +50,6 @@ class DogPicDAO {
       callback(data.Item);
     });
   }
-}
-
-function getDocClient() {
-  AWS.config.update({
-    region: "us-east-2",
-    endpoint: "https://dynamodb.us-east-2.amazonaws.com",
-    accessKeyId: authID,
-    secretAccessKey: authSecret
-  });
-
-  return new AWS.DynamoDB.DocumentClient();
 }
 
 module.exports = DogPicDAO;
