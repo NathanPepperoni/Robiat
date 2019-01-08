@@ -2,9 +2,19 @@ var AWS = require('aws-sdk');
 const Logger = require('./Logger');
 const dogPicsTable = 'QueenMelonDogPics';
 
+/**
+ * Abstraction layer for accessing DogPic backend.
+ */
 class DogPicDAO {
   constructor() { }
 
+  /**
+   * Adds pics to a dog in the backend.
+   * 
+   * @param {String} dog - name of the dog to add the pics to (e.g. marshmallow, lex, clark)
+   * @param {String[]} dogPics - list of urls pointing to dog pictures to add to the dog
+   * @param {function} callback - callback
+   */
   addDogPics(dog, dogPics, callback) {
     var docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -32,6 +42,12 @@ class DogPicDAO {
     });
   }
 
+  /**
+   * Retrieves the list of pictures related to a given dog.
+   * 
+   * @param {String} dog - name of the dog to add the pics to (e.g. marshmallow, lex, clark)
+   * @param {function} callback - callback through which the data will be returned
+   */
   getDogPics(dog, callback) {
     var docClient = new AWS.DynamoDB.DocumentClient();
 

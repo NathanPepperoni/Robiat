@@ -36,7 +36,7 @@ client.on('message', message => {
 
     case "!hohoho":
       message.channel.send('ho ho ho!');
-      message.channel.send({file: "https://media.giphy.com/media/cc3FdmGSrr35C/giphy.gif"});
+      message.channel.send({ file: "https://media.giphy.com/media/cc3FdmGSrr35C/giphy.gif" });
       return;
 
     case "!lex":
@@ -61,6 +61,11 @@ client.on('message', message => {
   }
 });
 
+/**
+ * Processes the command when no other command matches were found.
+ * 
+ * @param {String} message - The full command
+ */
 function handleDefault(message) {
   if (message.channel.id === '518101941419507712') {
     RoyalPetWatcher.processMessage(message);
@@ -70,6 +75,10 @@ function handleDefault(message) {
   }
 }
 
+/**
+ * Processes the dan command.
+ * @param {String} message - The full command
+ */
 function handleDanCommand(message) {
   if (message.guild.id === '524282560260603905') {
     message.channel.send("did someone say Dan?");

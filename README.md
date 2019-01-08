@@ -7,5 +7,4 @@ TODO:
 * make an actual CLI parser for parsing command flags
 * add ability to remove dog pics
 * add watcher to update and extract images from #royal-k9s
-* add comments
 * add tests
