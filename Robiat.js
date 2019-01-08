@@ -3,12 +3,12 @@ const RoyalPetWatcher = require('./RoyalPetWatcher');
 const DogCommand = require('./DogCommand');
 const Logger = require('./Logger');
 const os = require('os');
+const LoginUtility = require('./LoginUtility');
+
 const client = new Discord.Client();
 const lexCommand = new DogCommand('lex');
 const clarkCommand = new DogCommand('clark');
 const marshCommand = new DogCommand('marshmallow');
-const auth = process.env.ROBIAT_AUTH_KEY;
-const retryMax = 4;
 
 client.on('ready', () => {
   Logger.client = client;
@@ -77,19 +77,4 @@ function handleDanCommand(message) {
   }
 }
 
-function login(attemptCount = 0) {
-  if (attemptCount >= retryMax) {
-    Logger.logEvent('error', "Could not reconnect to discord server.");
-    return;
-  };
-  client.login(auth)
-  .catch(reason => {
-    attemptCount += 1;
-    Logger.logEvent('error',reason);
-    Logger.logEvent('info', "Reconnection attempt number " + attemptCount);
-    login(attemptCount);
-    setTimeout(() => {return}, 5000);
-  });
-}
-
-login();
+LoginUtility.login(client);

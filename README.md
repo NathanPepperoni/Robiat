@@ -7,4 +7,5 @@ TODO:
 * make an actual CLI parser for parsing command flags
 * add ability to remove dog pics
 * add watcher to update and extract images from #royal-k9s
-* retrieve auth keys from AWS parameter store when possible
+* add comments
+* add tests
