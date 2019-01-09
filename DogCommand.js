@@ -19,8 +19,8 @@ class DogCommand {
    * @param {String} message - The full command to process
    */
   processMessage(message) {
-    if (this.dog) {
-      Logger.logEv
+    if (!this.dog) {
+      Logger.logEvent('error', 'DogCommand used with empty/undefined dog');
       return;
     }
     handleDogCommand(message, this.dog);
