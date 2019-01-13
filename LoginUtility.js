@@ -3,6 +3,7 @@ const SSM = require('aws-sdk/clients/ssm');
 const Logger = require('./Logger');
 const retryMax = 4;
 const awsRegion = 'us-east-2';
+const waitTime_ms = 5000;
 
 let discordToken;
 let awsAuthID;
@@ -112,8 +113,9 @@ function login(client, attemptCount = 0) {
       attemptCount += 1;
       Logger.logEvent('error', reason);
       Logger.logEvent('info', 'Reconnection attempt number ' + attemptCount);
-      login(client, attemptCount);
-      setTimeout(() => { return }, 5000);
+      setTimeout(() => { 
+        login(client, attemptCount);
+      }, waitTime_ms);
     });
 }
 

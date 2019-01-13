@@ -8,7 +8,7 @@ const logChannelID = "525143449654001664";
  */
 function sendToLogChannel(type, message) {
   message = type.toUpperCase() + ': ' + message;
-  if (Logger.client) {
+  if (Logger.client && Logger.client.token) {
     let logChannel = Logger.client.channels.get(logChannelID);
     let messageString = new Date().toTimeString() + "\r\n" + message;
     logChannel.send("```" + messageString + "```");
