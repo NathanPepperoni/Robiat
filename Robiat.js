@@ -12,8 +12,21 @@ const marshCommand = new DogCommand('marshmallow');
 
 client.on('ready', () => {
   Logger.client = client;
-  Logger.logEvent('info', "Reconnected on " + os.hostname() + " (" + os.type() + " " + os.release() + ")");
+  Logger.logEvent('info', `Initialized on ${getHost()}`);
 });
+
+client.on('error', error => {
+  Logger.logEvent('error', JSON.stringify(error));
+  LoginUtility.login(client);
+});
+
+client.on('resume', () => {
+  Logger.logEvent('info', `Reconnected on ${getHost()}`);
+})
+
+function getHost() {
+  return `${os.hostname()} (${os.type()} ${os.release()})`
+}
 
 client.on('message', message => {
   var author = message.author;
