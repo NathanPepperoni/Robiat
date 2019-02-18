@@ -47,6 +47,16 @@ client.on('message', message => {
       //forbidden mrag: message.channel.send('MRAG\nhttps://i.imgur.com/Qwp7TRi.png');
       return;
 
+    case "!celebrate":
+      message.channel.send('I cannot celebrate. I am a robot.');
+      setTimeout(() => {
+        message.channel.send('JUST KIDDING LETS ROBO BOOGY');
+        message.channel.send({
+          files: ['https://media.giphy.com/media/1Mng0gXC5Tpcs/giphy.gif']
+        })
+      }, 5000);
+      return;
+
     case "!hohoho":
       message.channel.send('ho ho ho!');
       message.channel.send({ file: "https://media.giphy.com/media/cc3FdmGSrr35C/giphy.gif" });
