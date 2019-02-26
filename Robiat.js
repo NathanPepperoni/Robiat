@@ -96,6 +96,46 @@ function handleDefault(message) {
   if (message.content.includes('<@213098512798187521>')) {
     handleDanCommand(message);
   }
+
+  if (message.guild.id === '524282560260603905') {
+    handleNameMap(message);
+  }
+}
+
+function handleNameMap(message) {
+  
+  const nameMap = [
+    {
+      'alias' : "nathan",
+      'id': '135670389392146432'
+    },
+    { 
+      'alias' : 'dan',
+      'id' : '213098512798187521'
+    },
+    { 
+      'alias' : 'andrew',
+      'id' : '201836373475459072'
+    },
+    { 
+      'alias' : 'jim',
+      'id' : '131609300736016385'
+    },
+    { 
+      'alias' : 'nate',
+      'id' : '549665524850884637'
+    },
+    { 
+      'alias' : 'thong',
+      'id' : '366809052413558797'
+    },
+  ];
+
+  for (name in nameMap) {
+    if (message.content.toLowerCase().includes(`@${nameMap[name].alias}`)){
+      message.channel.send(`Hey <@${nameMap[name].id}>, someone mentioned you!`)
+    }
+  }
 }
 
 /**
