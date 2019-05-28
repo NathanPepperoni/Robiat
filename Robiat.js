@@ -96,9 +96,12 @@ function handleDefault(message) {
   if (message.content.includes('<@213098512798187521>')) {
     handleDanCommand(message);
   }
-
+  
   if (message.guild.id === '524282560260603905') {
     handleNameMap(message);
+    if (message.content == "Robiat wouldn't trick me like, thankfully.") {
+      message.reply("Right.... of course....");
+    }
   }
 }
 
@@ -145,7 +148,7 @@ function handleNameMap(message) {
 function handleDanCommand(message) {
   if (message.guild.id === '524282560260603905') {
     message.channel.send("did someone say Dan?");
-    message.channel.send({ file: "http://www.rednovalabs.com/images/team/dan-stucky/funny.jpg" });
+    message.channel.send({ file: "https://i.imgur.com/zabz8Cp.png" });
   }
 }
 
